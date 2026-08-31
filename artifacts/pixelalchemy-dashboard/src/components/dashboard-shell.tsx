@@ -1,12 +1,11 @@
 import { type ReactNode, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Activity, BarChart3, Building2, ChevronRight, FileText, GitCompareArrows, Layers3, ListOrdered, MapPinned, Menu, Mountain, UsersRound, X } from "lucide-react";
+import { Activity, Building2, ChevronRight, FileText, GitCompareArrows, Layers3, ListOrdered, MapPinned, Menu, Mountain, UsersRound, X } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Risk overview", icon: Activity },
   { href: "/risk-map", label: "Risk map", icon: MapPinned },
   { href: "/villages", label: "Village priorities", icon: Mountain },
-  { href: "/hazard-analysis", label: "Hazard analysis", icon: BarChart3 },
   { href: "/population-risk", label: "Population risk", icon: UsersRound },
   { href: "/relocation-priority", label: "Relocation priority", icon: ListOrdered },
   { href: "/safe-sites", label: "Safe sites", icon: Layers3 },
