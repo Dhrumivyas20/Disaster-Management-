@@ -1,11 +1,18 @@
 import { type ReactNode, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Activity, Building2, ChevronRight, Menu, Mountain, PanelLeftClose, X } from "lucide-react";
+import { Activity, BarChart3, Building2, ChevronRight, FileText, GitCompareArrows, Layers3, ListOrdered, MapPinned, Menu, Mountain, UsersRound, X } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Risk overview", icon: Activity },
+  { href: "/risk-map", label: "Risk map", icon: MapPinned },
   { href: "/villages", label: "Village priorities", icon: Mountain },
+  { href: "/hazard-analysis", label: "Hazard analysis", icon: BarChart3 },
+  { href: "/population-risk", label: "Population risk", icon: UsersRound },
+  { href: "/relocation-priority", label: "Relocation priority", icon: ListOrdered },
+  { href: "/safe-sites", label: "Safe sites", icon: Layers3 },
+  { href: "/site-comparison", label: "Site comparison", icon: GitCompareArrows },
   { href: "/facilities", label: "Critical facilities", icon: Building2 },
+  { href: "/reports", label: "Reports", icon: FileText },
 ];
 
 export function DashboardShell({ children }: { children: ReactNode }) {
@@ -26,7 +33,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           </Link>
           <button type="button" onClick={() => setMobileOpen(false)} className="md:hidden" aria-label="Close menu" data-testid="button-close-menu"><X size={18} /></button>
         </div>
-        <div className="px-5 pt-8">
+        <div className="overflow-y-auto px-5 pt-8">
           <p className="mb-3 px-2 font-mono text-[10px] uppercase tracking-[.18em] text-[#aeb8b6]">Command desk</p>
           <nav className="space-y-1" aria-label="Primary navigation">
             {navItems.map(({ href, label, icon: Icon }) => {

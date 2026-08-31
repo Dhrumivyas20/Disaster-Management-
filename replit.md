@@ -37,6 +37,7 @@ A full-stack disaster-management decision dashboard for assessing village hazard
 - The three supplied CSVs are seeded into managed PostgreSQL on first API startup; the API computes derived scores from persisted records.
 - The frontend uses generated OpenAPI hooks so screens consume the same typed contract implemented by the API.
 - Map rendering is a lightweight coordinate-based risk layer suitable for the curated pilot region, not a polygon/GIS pipeline.
+- The map provider is isolated in `src/lib/map-provider.ts`; the keyless sample layer stays active until both a custom API URL and tile URL template are configured.
 
 ## Product
 
@@ -44,6 +45,7 @@ A full-stack disaster-management decision dashboard for assessing village hazard
 - Searchable and filterable village register with explainable scores
 - Village detail records with nearby critical facilities
 - Relocation handoff with ranked candidate sites, carrying-capacity status, and criterion breakdowns
+- Risk map, hazard analysis, population exposure, relocation priority, safe-site discovery, site comparison, and print-ready reports
 - Critical facilities reference list for hospitals, schools, and water sources
 
 ## User preferences
@@ -55,6 +57,7 @@ A full-stack disaster-management decision dashboard for assessing village hazard
 - Run API codegen after changing `lib/api-spec/openapi.yaml`.
 - Run the database push after changing `lib/db/src/schema/`.
 - The API seeds from the workspace-root `data/` directory while its workflow runs with the API package as the working directory.
+- To replace the map layer, set `VITE_MAP_API_URL`, `VITE_MAP_TILE_URL_TEMPLATE`, and optionally `VITE_MAP_API_KEY`, or replace the adapter in `artifacts/pixelalchemy-dashboard/src/lib/map-provider.ts`.
 
 ## Pointers
 
