@@ -1,0 +1,21 @@
+village_id,village_name,lat,lon,population,households,existing_hazard_zone,historical_incidents
+V001,Joshimath,30.5548,79.5651,16709,3800,High,1
+V002,Kedarnath (Rambara belt),30.7346,79.0669,450,120,High,1
+V003,Gaurikund,30.6890,79.0289,600,150,High,1
+V004,Sonprayag,30.6636,79.0500,1200,280,High,1
+V005,Rudraprayag Town,30.2849,78.9814,5500,1200,Moderate,0
+V006,Agastyamuni,30.4167,79.0000,4200,950,Moderate,0
+V007,Chamoli Town,30.4000,79.3200,3900,880,Moderate,0
+V008,Gopeshwar,30.3915,79.3355,10800,2400,Moderate,0
+V009,Tapovan,30.5900,79.5300,2100,480,High,1
+V010,Pipalkoti,30.2995,79.4508,3200,720,Moderate,0
+V011,Karnaprayag,30.2650,79.2160,7300,1650,Moderate,0
+V012,Nandprayag,30.3200,79.3100,1500,340,Moderate,0
+V013,Guptkashi,30.5300,79.0800,3600,820,Moderate,0
+V014,Ukhimath,30.5286,79.1094,2800,630,Moderate,0
+V015,Devprayag,30.1461,78.5978,3300,750,Yellow,0
+V016,Chopta,30.4900,79.1900,300,70,High,1
+V017,Mandal,30.4700,79.2100,900,200,Moderate,0
+V018,Helang,30.5700,79.5500,1100,250,High,1
+V019,Pandukeshwar,30.6800,79.5700,700,160,High,1
+V020,Bhanwarkund,30.2600,79.4900,1800,410,Yellow,0

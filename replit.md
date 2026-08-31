@@ -1,44 +1,60 @@
-# [Project name]
+# PixelAlchemy Risk Dashboard
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A full-stack disaster-management decision dashboard for assessing village hazard exposure, relocation priority, and capacity-verified candidate sites across Rudraprayag and Chamoli, Uttarakhand.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/api-server run dev` — run the API server (port 8080)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/pixelalchemy-dashboard run dev` — run the Vite dashboard
+- Required env: `DATABASE_URL` — managed Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
+- Frontend: React + Vite, Wouter, TanStack React Query, Tailwind CSS
 - API: Express 5
 - DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
+- Validation: Zod, `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
 - Build: esbuild (CJS bundle)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/pixelalchemy-dashboard/` — responsive dashboard UI and routes
+- `artifacts/api-server/src/lib/pixelalchemy.ts` — weighted hazard, priority, and AHP suitability logic
+- `artifacts/api-server/src/lib/seed.ts` — first-run CSV seed for the demo dataset
+- `lib/db/src/schema/pixelalchemy.ts` — source of truth for persisted villages, facilities, and candidate sites
+- `lib/api-spec/openapi.yaml` — source of truth for API contracts and generated client hooks
+- `data/` — curated demo CSV inputs for villages, facilities, and candidate sites
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The prototype uses an auditable weighted risk index and AHP suitability score instead of ML training or live GIS feeds.
+- The three supplied CSVs are seeded into managed PostgreSQL on first API startup; the API computes derived scores from persisted records.
+- The frontend uses generated OpenAPI hooks so screens consume the same typed contract implemented by the API.
+- Map rendering is a lightweight coordinate-based risk layer suitable for the curated pilot region, not a polygon/GIS pipeline.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Live regional overview with exposure totals, risk-zone markers, and priority action queue
+- Searchable and filterable village register with explainable scores
+- Village detail records with nearby critical facilities
+- Relocation handoff with ranked candidate sites, carrying-capacity status, and criterion breakdowns
+- Critical facilities reference list for hospitals, schools, and water sources
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- User requested a complete working full-stack prototype and preferred React + Vite for the frontend.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Run API codegen after changing `lib/api-spec/openapi.yaml`.
+- Run the database push after changing `lib/db/src/schema/`.
+- The API seeds from the workspace-root `data/` directory while its workflow runs with the API package as the working directory.
 
 ## Pointers
 

@@ -3,13 +3,21 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: API for the PixelAlchemy hazard and relocation decision dashboard
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: dashboard
+    description: Dashboard aggregates
+  - name: villages
+    description: Village hazard and priority data
+  - name: relocation
+    description: Relocation suitability recommendations
+  - name: facilities
+    description: Critical facilities
 paths:
   /healthz:
     get:
@@ -24,6 +32,144 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary
+      description: Returns headline counts and population exposure totals for the active region.
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+  /zones:
+    get:
+      operationId: getZones
+      tags: [villages]
+      summary: Get village zone markers
+      description: Returns the village points used to render the risk map.
+      responses:
+        "200":
+          description: Village zone markers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZoneMarker"
+  /villages:
+    get:
+      operationId: getVillages
+      tags: [villages]
+      summary: List villages
+      description: Returns scored villages with optional search, zone, and priority filters.
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: zone
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [Red, Orange, Yellow, Green]
+        - name: priority
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [Immediate, "Short-term", "Medium-term", Monitor]
+      responses:
+        "200":
+          description: Village list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Village"
+  /villages/{villageId}:
+    get:
+      operationId: getVillage
+      tags: [villages]
+      summary: Get village detail
+      parameters:
+        - name: villageId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Village detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VillageDetail"
+        "404":
+          description: Village not found
+  /priority:
+    get:
+      operationId: getPriority
+      tags: [villages]
+      summary: Get prioritized villages
+      description: Returns all villages ordered by relocation urgency.
+      responses:
+        "200":
+          description: Prioritized village list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VillagePriority"
+  /relocation/{villageId}:
+    get:
+      operationId: getRelocation
+      tags: [relocation]
+      summary: Get relocation recommendations
+      description: Returns ranked candidate sites and the explainable weighted score for one village.
+      parameters:
+        - name: villageId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Ranked relocation sites
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RelocationResponse"
+        "404":
+          description: Village not found
+  /facilities:
+    get:
+      operationId: getFacilities
+      tags: [facilities]
+      summary: List critical facilities
+      parameters:
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [hospital, school, water_source]
+      responses:
+        "200":
+          description: Facility list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Facility"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +179,226 @@ components:
           type: string
       required:
         - status
-
+    ZoneColor:
+      type: string
+      enum: [Red, Orange, Yellow, Green]
+    PriorityBucket:
+      type: string
+      enum: [Immediate, "Short-term", "Medium-term", Monitor]
+    DashboardSummary:
+      type: object
+      properties:
+        region:
+          type: string
+        total_villages:
+          type: number
+        total_population:
+          type: number
+        total_households:
+          type: number
+        high_risk_villages:
+          type: number
+        immediate_priority:
+          type: number
+        population_at_risk:
+          type: number
+        zone_counts:
+          type: object
+          additionalProperties:
+            type: number
+        priority_counts:
+          type: object
+          additionalProperties:
+            type: number
+      required:
+        - region
+        - total_villages
+        - total_population
+        - total_households
+        - high_risk_villages
+        - immediate_priority
+        - population_at_risk
+        - zone_counts
+        - priority_counts
+    ZoneMarker:
+      type: object
+      properties:
+        village_id:
+          type: string
+        village_name:
+          type: string
+        lat:
+          type: number
+        lon:
+          type: number
+        zone_color:
+          $ref: "#/components/schemas/ZoneColor"
+        hazard_score:
+          type: number
+        population:
+          type: number
+      required:
+        - village_id
+        - village_name
+        - lat
+        - lon
+        - zone_color
+        - hazard_score
+        - population
+    Village:
+      type: object
+      properties:
+        village_id:
+          type: string
+        village_name:
+          type: string
+        lat:
+          type: number
+        lon:
+          type: number
+        population:
+          type: number
+        households:
+          type: number
+        existing_hazard_zone:
+          type: string
+          enum: [High, Moderate, Yellow]
+        historical_incidents:
+          type: number
+        hazard_score:
+          type: number
+        zone_color:
+          $ref: "#/components/schemas/ZoneColor"
+        priority_score:
+          type: number
+        priority_bucket:
+          $ref: "#/components/schemas/PriorityBucket"
+      required:
+        - village_id
+        - village_name
+        - lat
+        - lon
+        - population
+        - households
+        - existing_hazard_zone
+        - historical_incidents
+        - hazard_score
+        - zone_color
+        - priority_score
+        - priority_bucket
+    VillageDetail:
+      allOf:
+        - $ref: "#/components/schemas/Village"
+        - type: object
+          properties:
+            nearby_facilities:
+              type: array
+              items:
+                $ref: "#/components/schemas/Facility"
+          required:
+            - nearby_facilities
+    VillagePriority:
+      allOf:
+        - $ref: "#/components/schemas/Village"
+        - type: object
+          properties:
+            score_breakdown:
+              type: object
+              additionalProperties:
+                type: number
+          required:
+            - score_breakdown
+    Facility:
+      type: object
+      properties:
+        facility_id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [hospital, school, water_source]
+        lat:
+          type: number
+        lon:
+          type: number
+      required:
+        - facility_id
+        - name
+        - type
+        - lat
+        - lon
+    RelocationSite:
+      type: object
+      properties:
+        site_id:
+          type: string
+        site_name:
+          type: string
+        lat:
+          type: number
+        lon:
+          type: number
+        land_availability:
+          type: string
+          enum: [High, Medium]
+        existing_population:
+          type: number
+        hazard_zone:
+          type: string
+          enum: [Yellow, Green]
+        distance_to_road_km:
+          type: number
+        distance_to_water_km:
+          type: number
+        distance_to_healthcare_km:
+          type: number
+        carrying_capacity:
+          type: number
+        available_capacity:
+          type: number
+        capacity_status:
+          type: string
+          enum: [Ready, Limited, Insufficient]
+        suitability_score:
+          type: number
+        rank:
+          type: number
+        score_breakdown:
+          type: object
+          additionalProperties:
+            type: number
+      required:
+        - site_id
+        - site_name
+        - lat
+        - lon
+        - land_availability
+        - existing_population
+        - hazard_zone
+        - distance_to_road_km
+        - distance_to_water_km
+        - distance_to_healthcare_km
+        - carrying_capacity
+        - available_capacity
+        - capacity_status
+        - suitability_score
+        - rank
+        - score_breakdown
+    RelocationResponse:
+      type: object
+      properties:
+        village:
+          $ref: "#/components/schemas/Village"
+        criteria_weights:
+          type: object
+          additionalProperties:
+            type: number
+        recommendations:
+          type: array
+          items:
+            $ref: "#/components/schemas/RelocationSite"
+      required:
+        - village
+        - criteria_weights
+        - recommendations
