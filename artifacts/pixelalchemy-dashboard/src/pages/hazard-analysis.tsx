@@ -12,6 +12,20 @@ export default function HazardAnalysis() {
   const villagesQuery = useGetVillages();
   const villages = useMemo(() => villagesQuery.data ?? [], [villagesQuery.data]);
 
+  const zoneStats = useMemo(
+    () =>
+      zones.map((zone) => {
+        const inZone = villages.filter((village) => village.zone_color === zone);
+        const average = inZone.length ? inZone.reduce((total, village) => total + village.hazard_score, 0) / inZone.length : 0;
+        return { zone, count: inZone.length, average };
+      }),
+    [villages]
+  );
+  const highest = useMemo(
+    () => [...villages].sort((a, b) => b.hazard_score - a.hazard_score).slice(0, 6),
+    [villages]
+  );
+
   if (summaryQuery.isLoading || villagesQuery.isLoading) {
     return <DashboardShell><LoadingState label="Calculating multi-hazard risk analysis" /></DashboardShell>;
   }
@@ -30,16 +44,6 @@ export default function HazardAnalysis() {
   }
 
   const summary = summaryQuery.data;
-  const zoneStats = useMemo(
-    () =>
-      zones.map((zone) => {
-        const inZone = villages.filter((village) => village.zone_color === zone);
-        const average = inZone.length ? inZone.reduce((total, village) => total + village.hazard_score, 0) / inZone.length : 0;
-        return { zone, count: inZone.length, average };
-      }),
-    [villages]
-  );
-  const highest = [...villages].sort((a, b) => b.hazard_score - a.hazard_score).slice(0, 6);
 
   return (
     <DashboardShell>

@@ -70,26 +70,26 @@ export default function SafeSites() {
             response.recommendations.map((site, index) => (
               <article
                 key={site.site_id}
-                className={`border bg-[#fbf9f3] p-5 transition-colors ${
-                  index === 0 ? "border-[#3f7069] border-l-4 shadow-sm" : "border-[#d7d1c5]"
+                className={`border bg-[#FEFEFE] p-5 transition-colors ${
+                  index === 0 ? "border-[#4B5125] border-l-4 shadow-sm" : "border-[#727270]/25"
                 }`}
                 data-testid={`card-safe-site-${site.site_id}`}
               >
                 <div className="flex flex-col gap-5 lg:flex-row lg:items-center">
                   <div className="flex min-w-0 flex-1 items-start gap-4">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center bg-[#e8b84c] font-mono text-xs font-bold text-[#263440]">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center bg-[#4B5125] font-mono text-xs font-bold text-[#FEFEFE]">
                       {String(site.rank).padStart(2, "0")}
                     </span>
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h2 className="text-lg font-bold text-[#263440]">{site.site_name}</h2>
+                        <h2 className="text-lg font-bold text-[#4B5125]">{site.site_name}</h2>
                         {index === 0 && <StatusPill value="Top Match" tone="green" />}
                         <StatusPill
                           value={site.capacity_status}
                           tone={site.capacity_status === "Ready" ? "green" : site.capacity_status === "Limited" ? "yellow" : "red"}
                         />
                       </div>
-                      <div className="mt-2 flex flex-wrap gap-3 text-xs text-[#60717c]">
+                      <div className="mt-2 flex flex-wrap gap-3 text-xs text-[#727270]">
                         <span className="inline-flex items-center gap-1 font-mono">
                           <MapPin size={12} /> {site.hazard_zone} Hazard Zone
                         </span>
@@ -98,7 +98,7 @@ export default function SafeSites() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 border-t border-[#e8e3da] pt-4 sm:grid-cols-3 lg:w-[440px] lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
+                  <div className="grid grid-cols-2 gap-4 border-t border-[#727270]/20 pt-4 sm:grid-cols-3 lg:w-[440px] lg:border-l lg:border-t-0 lg:pl-5 lg:pt-0">
                     <CapacityStat available={site.available_capacity} total={site.carrying_capacity} />
                     <DistanceStat label="Road access" value={site.distance_to_road_km} />
                     <DistanceStat label="Healthcare" value={site.distance_to_healthcare_km} />
@@ -106,12 +106,12 @@ export default function SafeSites() {
 
                   <div className="flex items-center gap-3 lg:w-[155px] lg:justify-end">
                     <div className="text-left lg:text-right">
-                      <p className="font-mono text-[9px] uppercase tracking-[.1em] text-[#60717c]">AHP Suitability</p>
-                      <p className="font-mono text-2xl font-bold text-[#263440]">{(site.suitability_score * 100).toFixed(1)}</p>
+                      <p className="font-mono text-[9px] uppercase tracking-[.1em] text-[#727270]">AHP Suitability</p>
+                      <p className="font-mono text-2xl font-bold text-[#4B5125]">{(site.suitability_score * 100).toFixed(1)}</p>
                     </div>
                     <Link
                       href={`/relocation/${selectedId}`}
-                      className="grid h-8 w-8 place-items-center border border-[#d7d1c5] text-[#3f7069] hover:border-[#3f7069] transition-colors"
+                      className="grid h-8 w-8 place-items-center border border-[#727270]/25 text-[#4B5125] hover:border-[#4B5125] transition-colors"
                       aria-label={`Open all relocation details for ${site.site_name}`}
                       data-testid={`link-site-detail-${site.site_id}`}
                     >
@@ -120,10 +120,10 @@ export default function SafeSites() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between border-t border-[#e8e3da] pt-3 text-xs text-[#60717c]">
+                <div className="mt-4 flex items-center justify-between border-t border-[#727270]/20 pt-3 text-xs text-[#727270]">
                   <div className="flex items-center gap-2">
                     {site.capacity_status === "Ready" ? (
-                      <CheckCircle2 size={14} className="text-[#3f7069]" />
+                      <CheckCircle2 size={14} className="text-[#4B5125]" />
                     ) : (
                       <Compass size={14} className="text-[#b65343]" />
                     )}

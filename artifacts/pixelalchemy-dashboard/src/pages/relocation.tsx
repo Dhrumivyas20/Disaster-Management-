@@ -39,21 +39,21 @@ export default function Relocation() {
         <p className="font-mono text-[10px] uppercase tracking-[.15em] text-[#60717c] font-semibold mb-3">
           Relocation Decision Pipeline
         </p>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 font-mono text-xs text-[#263440]">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 font-mono text-xs text-[#4B5125]">
           <div className="border border-[#cb7339]/40 bg-[#fbefe1] p-2.5">
             <span className="block text-[9px] uppercase text-[#a55b28] font-bold">1. ML Demand</span>
             <b>~{mlDemandFamilies} Families</b>
           </div>
-          <div className="border border-[#d7d1c5] bg-[#fbf9f3] p-2.5">
-            <span className="block text-[9px] uppercase text-[#60717c]">2. Required Cap</span>
+          <div className="border border-[#727270]/25 bg-[#FEFEFE] p-2.5">
+            <span className="block text-[9px] uppercase text-[#727270]">2. Required Cap</span>
             <b>{formatNumber(village.population)} People</b>
           </div>
-          <div className="border border-[#d7d1c5] bg-[#fbf9f3] p-2.5">
-            <span className="block text-[9px] uppercase text-[#60717c]">3. Capacity Check</span>
+          <div className="border border-[#727270]/25 bg-[#FEFEFE] p-2.5">
+            <span className="block text-[9px] uppercase text-[#727270]">3. Capacity Check</span>
             <b>{readySites} Ready · {limitedSites} Lim</b>
           </div>
-          <div className="border border-[#3f7069]/40 bg-[#e0ebe7] p-2.5">
-            <span className="block text-[9px] uppercase text-[#3f7069] font-bold">4. AHP Suitability</span>
+          <div className="border border-[#4B5125]/40 bg-[#F0F1DB] p-2.5">
+            <span className="block text-[9px] uppercase text-[#4B5125] font-bold">4. AHP Suitability</span>
             <b>#1 {best?.site_name ?? "None"}</b>
           </div>
         </div>
@@ -61,45 +61,45 @@ export default function Relocation() {
 
       {/* Top Banner: ML Relocation Demand & Source Village */}
       <section className="mb-5 grid gap-4 lg:grid-cols-[1.15fr_.85fr]">
-        <div className="border border-[#2f4a4d] bg-[#3f7069] p-6 text-[#f2eee4]">
+        <div className="border border-[#5c6331] bg-[#4B5125] p-6 text-[#FEFEFE]">
           <div className="flex items-start justify-between">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[.17em] text-[#c2d6cd]">Relocation Demand</p>
+              <p className="font-mono text-[10px] uppercase tracking-[.17em] text-[#ECE5DC]/75">Relocation Demand</p>
               <h2 className="mt-1 text-2xl font-bold">{village.village_name}</h2>
             </div>
-            <Route size={21} className="text-[#e8b84c]" />
+            <Route size={21} className="text-[#F0F1DB]" />
           </div>
 
-          <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[#6f958d] pt-4">
+          <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[#5c6331] pt-4">
             <div>
-              <p className="font-mono text-[9px] uppercase text-[#c2d6cd]">ML Est. Families</p>
-              <p className="mt-1 font-mono text-xl font-bold text-[#e8b84c]">~{mlDemandFamilies}</p>
+              <p className="font-mono text-[9px] uppercase text-[#ECE5DC]/75">ML Est. Families</p>
+              <p className="mt-1 font-mono text-xl font-bold text-[#F0F1DB]">~{mlDemandFamilies}</p>
             </div>
             <div>
-              <p className="font-mono text-[9px] uppercase text-[#c2d6cd]">Total Residents</p>
+              <p className="font-mono text-[9px] uppercase text-[#ECE5DC]/75">Total Residents</p>
               <p className="mt-1 font-mono text-lg font-bold">{formatNumber(village.population)}</p>
             </div>
             <div>
-              <p className="font-mono text-[9px] uppercase text-[#c2d6cd]">Final Hazard</p>
+              <p className="font-mono text-[9px] uppercase text-[#ECE5DC]/75">Final Hazard</p>
               <p className="mt-1 font-mono text-lg font-bold">{(village.hazard_score * 100).toFixed(1)}%</p>
             </div>
           </div>
         </div>
 
         {/* AHP Criteria Weights */}
-        <div className="border border-[#d7d1c5] bg-[#fbf9f3] p-5">
-          <div className="flex items-center justify-between border-b border-[#e8e3da] pb-3">
+        <div className="border border-[#727270]/25 bg-[#FEFEFE] p-5">
+          <div className="flex items-center justify-between border-b border-[#727270]/20 pb-3">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[.15em] text-[#60717c]">AHP Criteria Weights</p>
-              <h2 className="mt-0.5 text-base font-bold">Multi-Criteria Formula</h2>
+              <p className="font-mono text-[10px] uppercase tracking-[.15em] text-[#727270]">AHP Criteria Weights</p>
+              <h2 className="mt-0.5 text-base font-bold text-[#4B5125]">Multi-Criteria Formula</h2>
             </div>
-            <CircleHelp size={16} className="text-[#60717c]" />
+            <CircleHelp size={16} className="text-[#727270]" />
           </div>
           <div className="mt-3 space-y-2">
             {Object.entries(criteriaWeights).map(([key, value]) => (
               <div key={key} className="flex items-center justify-between text-xs">
-                <span className="text-[#60717c]">{formatKey(key)}</span>
-                <span className="font-mono font-bold text-[#263440]">{(value * 100).toFixed(0)}%</span>
+                <span className="text-[#727270]">{formatKey(key)}</span>
+                <span className="font-mono font-bold text-[#4B5125]">{(value * 100).toFixed(0)}%</span>
               </div>
             ))}
           </div>
@@ -107,11 +107,11 @@ export default function Relocation() {
       </section>
 
       {/* Capacity Screening Summary */}
-      <section className="mb-5 border border-[#d7d1c5] bg-[#fbf9f3] p-5">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-[#e3ded4] pb-3">
+      <section className="mb-5 border border-[#727270]/25 bg-[#FEFEFE] p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-[#727270]/20 pb-3">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[.14em] text-[#3f7069] font-bold">Stage 2: Capacity Screening</p>
-            <h2 className="text-base font-bold">Carrying Capacity Feasibility Check</h2>
+            <p className="font-mono text-[10px] uppercase tracking-[.14em] text-[#4B5125] font-bold">Stage 2: Capacity Screening</p>
+            <h2 className="text-base font-bold text-[#4B5125]">Carrying Capacity Feasibility Check</h2>
           </div>
           <div className="flex gap-2">
             <StatusPill value={`${readySites} Ready`} tone="green" />
@@ -119,7 +119,7 @@ export default function Relocation() {
             <StatusPill value={`${insufficientSites} Insufficient`} tone="red" />
           </div>
         </div>
-        <p className="mt-3 text-xs leading-5 text-[#60717c]">
+        <p className="mt-3 text-xs leading-5 text-[#727270]">
           Candidate site available capacity (<span className="font-mono">carrying_capacity - existing_population</span>) is evaluated against village demand. Ready sites receive a feasibility incentive (+0.08 AHP boost), while insufficient sites receive a penalty (-0.12).
         </p>
       </section>
@@ -128,11 +128,11 @@ export default function Relocation() {
       <div className="mb-4 flex items-end justify-between">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[.16em] text-[#b65343] font-bold">Stage 3: AHP Site Suitability</p>
-          <h2 className="mt-0.5 text-xl font-bold">Ranked Safe Relocation Sites</h2>
+          <h2 className="mt-0.5 text-xl font-bold text-[#4B5125]">Ranked Safe Relocation Sites</h2>
         </div>
         {best && (
-          <p className="hidden text-xs text-[#60717c] md:block">
-            Top match: <span className="font-bold text-[#263440]">{best.site_name}</span> (AHP Score: {(best.suitability_score).toFixed(3)})
+          <p className="hidden text-xs text-[#727270] md:block">
+            Top match: <span className="font-bold text-[#4B5125]">{best.site_name}</span> (AHP Score: {(best.suitability_score).toFixed(3)})
           </p>
         )}
       </div>
@@ -144,8 +144,8 @@ export default function Relocation() {
           recommendations.map((site, index) => (
             <article
               key={site.site_id}
-              className={`border bg-[#fbf9f3] p-5 transition-colors ${
-                index === 0 ? "border-[#3f7069] border-l-4 shadow-sm" : "border-[#d7d1c5]"
+              className={`border bg-[#FEFEFE] p-5 transition-colors ${
+                index === 0 ? "border-[#4B5125] border-l-4 shadow-sm" : "border-[#727270]/25"
               }`}
               data-testid={`card-relocation-site-${site.site_id}`}
             >
@@ -153,27 +153,27 @@ export default function Relocation() {
                 <div className="flex min-w-0 flex-1 gap-4">
                   <span
                     className={`grid h-10 w-10 shrink-0 place-items-center font-mono text-sm font-bold ${
-                      index === 0 ? "bg-[#e8b84c] text-[#263440]" : "bg-[#e3e5df] text-[#60717c]"
+                      index === 0 ? "bg-[#4B5125] text-[#FEFEFE]" : "bg-[#F0F1DB] text-[#727270]"
                     }`}
                   >
                     {String(site.rank).padStart(2, "0")}
                   </span>
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-lg font-bold text-[#263440]">{site.site_name}</h3>
+                      <h3 className="text-lg font-bold text-[#4B5125]">{site.site_name}</h3>
                       {index === 0 && <StatusPill value="Top Recommendation" tone="green" />}
                       <StatusPill
                         value={`Capacity: ${site.capacity_status}`}
                         tone={site.capacity_status === "Ready" ? "green" : site.capacity_status === "Limited" ? "yellow" : "red"}
                       />
                     </div>
-                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[.09em] text-[#8a989a]">
+                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[.09em] text-[#727270]">
                       {site.hazard_zone} Hazard Zone · {site.land_availability} Land Availability · {site.lat.toFixed(3)}°N, {site.lon.toFixed(3)}°E
                     </p>
-                    <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-[#60717c]">
-                      <span>Road: <b className="font-mono text-[#263440]">{site.distance_to_road_km.toFixed(1)} km</b></span>
-                      <span>Water: <b className="font-mono text-[#263440]">{site.distance_to_water_km.toFixed(1)} km</b></span>
-                      <span>Healthcare: <b className="font-mono text-[#263440]">{site.distance_to_healthcare_km.toFixed(1)} km</b></span>
+                    <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-[#727270]">
+                      <span>Road: <b className="font-mono text-[#4B5125]">{site.distance_to_road_km.toFixed(1)} km</b></span>
+                      <span>Water: <b className="font-mono text-[#4B5125]">{site.distance_to_water_km.toFixed(1)} km</b></span>
+                      <span>Healthcare: <b className="font-mono text-[#4B5125]">{site.distance_to_healthcare_km.toFixed(1)} km</b></span>
                     </div>
                   </div>
                 </div>

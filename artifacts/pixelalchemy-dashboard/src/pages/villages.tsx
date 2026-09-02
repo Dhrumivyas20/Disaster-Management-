@@ -33,29 +33,29 @@ export default function Villages() {
         eyebrow="Village Register · Multi-Hazard & ML Assessment"
         title="Village Risk & Relocation Priority"
         description="Search the regional register. Open any village record to see the transparent risk signals, ML landslide intelligence, and relocation demand estimate."
-        action={<div className="font-mono text-[10px] uppercase tracking-[.14em] text-[#60717c]">{villages.length} villages listed</div>}
+        action={<div className="font-mono text-[10px] uppercase tracking-[.14em] text-[#727270]">{villages.length} villages listed</div>}
       />
-      <section className="border border-[#d7d1c5] bg-[#fbf9f3]">
-        <div className="flex flex-col gap-3 border-b border-[#e3ded4] p-4 lg:flex-row">
+      <section className="border border-[#727270]/25 bg-[#FEFEFE]">
+        <div className="flex flex-col gap-3 border-b border-[#727270]/20 p-4 lg:flex-row">
           <label className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8a989a]" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#727270]" />
             <input
               type="search"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search by village name..."
-              className="h-10 w-full border border-[#d7d1c5] bg-[#f2eee4] pl-10 pr-3 text-sm outline-none placeholder:text-[#8a989a] focus:border-[#3f7069]"
+              className="h-10 w-full border border-[#727270]/25 bg-[#ECE5DC] pl-10 pr-3 text-sm text-[#4B5125] outline-none placeholder:text-[#727270] focus:border-[#4B5125]"
               data-testid="input-search-villages"
             />
           </label>
-          <div className="flex items-center gap-2 text-[#60717c]">
+          <div className="flex items-center gap-2 text-[#727270]">
             <SlidersHorizontal size={15} />
             <span className="hidden text-xs sm:block">Filter:</span>
           </div>
           <select
             value={zone}
             onChange={(event) => setZone(event.target.value)}
-            className="h-10 border border-[#d7d1c5] bg-[#f2eee4] px-3 text-sm outline-none focus:border-[#3f7069]"
+            className="h-10 border border-[#727270]/25 bg-[#ECE5DC] px-3 text-sm text-[#4B5125] outline-none focus:border-[#4B5125]"
             aria-label="Filter by hazard zone"
             data-testid="select-zone"
           >
@@ -66,7 +66,7 @@ export default function Villages() {
           <select
             value={priority}
             onChange={(event) => setPriority(event.target.value)}
-            className="h-10 border border-[#d7d1c5] bg-[#f2eee4] px-3 text-sm outline-none focus:border-[#3f7069]"
+            className="h-10 border border-[#727270]/25 bg-[#ECE5DC] px-3 text-sm text-[#4B5125] outline-none focus:border-[#4B5125]"
             aria-label="Filter by priority"
             data-testid="select-priority"
           >
@@ -82,7 +82,7 @@ export default function Villages() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[860px] border-collapse text-left">
               <thead>
-                <tr className="border-b border-[#e3ded4] bg-[#f2eee4] font-mono text-[10px] uppercase tracking-[.12em] text-[#60717c]">
+                <tr className="border-b border-[#727270]/20 bg-[#ECE5DC] font-mono text-[10px] uppercase tracking-[.12em] text-[#727270]">
                   <th className="px-5 py-3 font-normal">Village</th>
                   <th className="px-3 py-3 font-normal">Hazard Zone</th>
                   <th className="px-3 py-3 font-normal">Population</th>
@@ -99,17 +99,17 @@ export default function Villages() {
                   return (
                     <tr
                       key={village.village_id}
-                      className="group border-b border-[#e8e3da] last:border-0 hover:bg-[#f7f3ea]"
+                      className="group border-b border-[#727270]/20 last:border-0 hover:bg-[#F0F1DB]/50 transition-colors"
                       data-testid={`row-village-${village.village_id}`}
                     >
                       <td className="px-5 py-4">
                         <Link href={`/villages/${village.village_id}`} className="flex items-center gap-3" data-testid={`link-village-${village.village_id}`}>
-                          <span className="grid h-8 w-8 place-items-center rounded-full bg-[#e4e1d8] font-bold text-[#3f7069]">
+                          <span className="grid h-8 w-8 place-items-center rounded-full bg-[#F0F1DB] font-bold text-[#4B5125]">
                             {village.village_name.slice(0, 1)}
                           </span>
                           <span>
-                            <span className="block text-sm font-bold group-hover:text-[#b65343]">{village.village_name}</span>
-                            <span className="font-mono text-[9px] text-[#8a989a]">
+                            <span className="block text-sm font-bold text-[#4B5125] group-hover:text-[#b65343]">{village.village_name}</span>
+                            <span className="font-mono text-[9px] text-[#727270]">
                               {village.lat.toFixed(3)}°N / {village.lon.toFixed(3)}°E · {village.historical_incidents} incident(s)
                             </span>
                           </span>
@@ -118,29 +118,29 @@ export default function Villages() {
                       <td className="px-3 py-4">
                         <StatusPill value={village.zone_color} tone={zoneTone[village.zone_color]} />
                       </td>
-                      <td className="px-3 py-4 font-mono text-sm">
+                      <td className="px-3 py-4 font-mono text-sm text-[#4B5125]">
                         {formatNumber(village.population)}
-                        <span className="block font-mono text-[9px] text-[#8a989a]">{formatNumber(village.households)} hh</span>
+                        <span className="block font-mono text-[9px] text-[#727270]">{formatNumber(village.households)} hh</span>
                       </td>
                       <td className="px-3 py-4">
                         <span className="font-mono text-sm font-bold text-[#a55b28]">{mlProb.toFixed(1)}%</span>
                         {village.predicted_movement_type && (
-                          <span className="block text-[9px] text-[#60717c] truncate max-w-[120px]">
+                          <span className="block text-[9px] text-[#727270] truncate max-w-[120px]">
                             {village.predicted_movement_type}
                           </span>
                         )}
                       </td>
-                      <td className="px-3 py-4 font-mono text-sm font-semibold text-[#263440]">
-                        ~{awaitingFams} <span className="text-[9px] font-normal text-[#60717c]">fams</span>
+                      <td className="px-3 py-4 font-mono text-sm font-semibold text-[#4B5125]">
+                        ~{awaitingFams} <span className="text-[9px] font-normal text-[#727270]">fams</span>
                       </td>
                       <td className="px-3 py-4">
-                        <span className="font-mono text-sm font-bold">{village.priority_score.toFixed(1)}</span>
-                        <span className="ml-2 text-xs text-[#60717c]">{village.priority_bucket}</span>
+                        <span className="font-mono text-sm font-bold text-[#4B5125]">{village.priority_score.toFixed(1)}</span>
+                        <span className="ml-2 text-xs text-[#727270]">{village.priority_bucket}</span>
                       </td>
                       <td className="px-5 py-4 text-right">
                         <Link
                           href={`/villages/${village.village_id}`}
-                          className="inline-grid h-8 w-8 place-items-center border border-[#d7d1c5] text-[#60717c] hover:border-[#b65343] hover:text-[#b65343]"
+                          className="inline-grid h-8 w-8 place-items-center border border-[#727270]/25 text-[#727270] hover:border-[#4B5125] hover:text-[#4B5125]"
                           aria-label={`Open ${village.village_name}`}
                           data-testid={`link-open-village-${village.village_id}`}
                         >
