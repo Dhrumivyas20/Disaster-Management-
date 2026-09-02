@@ -1,0 +1,57 @@
+{
+  "features": [
+    "lat",
+    "lon",
+    "population",
+    "households",
+    "household_density",
+    "historical_incidents",
+    "hazard_zone_encoded",
+    "nearest_water_dist_km",
+    "nearest_hospital_dist_km"
+  ],
+  "primary_model": "Landslide Probability Regressor (Gradient Boosting)",
+  "model_interpretation": "Pilot-corridor nonlinear spatial/risk calibrator for Rudraprayag and Chamoli districts. It serves as hazard intelligence within the multi-hazard risk engine, rather than a universally validated landslide prediction model.",
+  "dataset_limitations": "The pilot dataset consists of 20 curated base records across Rudraprayag and Chamoli. Augmented training data was generated from these records. The model is NOT validated for nationwide or general Uttarakhand deployment without extensive geotechnical and regional sensor data.",
+  "models": {
+    "landslide_probability": {
+      "file": "landslide_model.joblib",
+      "target": "Landslide Probability (0.0 to 1.0)",
+      "in_sample_training_fit": {
+        "r2": 0.9996,
+        "mae": 0.0044,
+        "evaluation_type": "TRAINING / IN-SAMPLE performance on augmented dataset"
+      },
+      "out_of_sample_validation": {
+        "method": "5-fold cross-validation on 20 base records",
+        "mae": 0.066,
+        "evaluation_type": "Out-of-sample generalization estimate for the 20-village pilot corridor (~6.6% mean absolute error)"
+      }
+    },
+    "relocation_demand": {
+      "file": "relocation_demand_model.joblib",
+      "target": "awaiting_families",
+      "in_sample_training_fit": {
+        "r2": 0.9983,
+        "evaluation_type": "TRAINING / IN-SAMPLE performance on augmented dataset"
+      }
+    },
+    "movement_classifier": {
+      "file": "movement_classifier.joblib",
+      "target": "movement_type",
+      "classes": [
+        "Creep/Subsidence",
+        "Debris Flow",
+        "Rotational Slide",
+        "Rock Fall"
+      ],
+      "in_sample_training_fit": {
+        "accuracy": 1.0,
+        "evaluation_type": "TRAINING / IN-SAMPLE performance on augmented dataset"
+      }
+    }
+  },
+  "district_scope": "Rudraprayag & Chamoli, Uttarakhand",
+  "base_village_count": 20,
+  "augmented_sample_count": 120
+}
